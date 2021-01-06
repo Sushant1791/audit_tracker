@@ -1,0 +1,62 @@
+<div>
+    <h2>
+        <span>Cost Centre</span>
+        <button class="btn btn-sm btn-outline-primary float-right jh-create-entity margin10" [routerLink]="['./new/0']">
+            <fa-icon [icon]="'plus'"></fa-icon> <span>Create Cost Centre</span>
+        </button>
+		<a class="btn float-right btn-sm btn-outline-warning margin10" routerLink="/">
+            <fa-icon [icon]="'home'"></fa-icon><span>&nbsp;Home</span></a> 
+	</h2>
+    <jhi-alert></jhi-alert>
+    <jhi-alert-error></jhi-alert-error>
+    <div class="table-responsive">
+        	<form  role="form" >
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th width="66%">Name: <input type="text" class="form-control" name="name" [(ngModel)]="searchCostCenter.costCentreName" 
+                                	maxlength="50" placeholder="Search by Name.."></th>
+                                <th width="33%">
+                                	<span><button type="submit" class="btn btn-warning srch_btn" (click)="getAllCostCenters(0,searchCostCenter)">Search</button></span>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+            </form>
+        <table class="table table-striped">
+            <thead>
+	            <tr>
+	            	<th>No</th>
+	                <th>Name</th>
+	                <th>Active</th>
+	                <th></th>
+	            </tr>
+            </thead>
+            <tbody>
+            	<tr *ngFor="let costcenter of costcenters; let i = index">
+					<td>{{i+1}}</td>
+	                <td>{{costcenter.costCentreName}}</td>
+	                <td>
+	                	<button class="btn btn-danger btn-sm" *ngIf="!costcenter.isActive" >Deactivated</button>
+                    	<button class="btn btn-success btn-sm"  *ngIf="costcenter.isActive">Activated</button>
+	                </td>
+	                <td>
+	               		<div class="text-center btn-group flex-btn-group-container">
+							<button type="submit" (click)="editCostCenter(costcenter.id)"
+								queryParamsHandling="merge"
+								class="btn  btn-outline-primary btn-sm">
+								<fa-icon [icon]="'pencil-alt'"></fa-icon>
+								<span class="d-none d-md-inline">View</span>
+							</button>
+						</div>
+	                
+	                </td>
+                </tr>
+                <tr *ngIf=" !costcenters ||  costcenters.length<=0" >
+                	<td  colspan="4" style="text-align: center;color: red;"> No data found</td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="button" *ngIf="totalCount!= 0 && page< totalCount-1" class="btn btn-primary" (click)="loadMore()">More</button>
+    </div>
+</div>

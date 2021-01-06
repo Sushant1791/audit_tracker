@@ -1,0 +1,124 @@
+<div>
+    <h2>
+        <span id="user-management-page-heading">Audit Assignor</span>
+        <button class="btn btn-sm btn-outline-primary float-right jh-create-entity margin10" [routerLink]="['./new/0']">
+            <fa-icon [icon]="'plus'"></fa-icon> <span>Assign Audit Plan</span>
+        </button>
+        <button *ngIf="auditplans && auditplans.length>0" class="btn btn-sm btn-outline-info float-right jh-create-entity margin10" (click)="bulkUpdateModal()">
+            <fa-icon [icon]="'edit'"></fa-icon> <span>Perform Bulk Update</span>
+        </button>
+        <a class="btn float-right btn-sm btn-outline-warning margin10" routerLink="/">
+                    <fa-icon [icon]="'home'"></fa-icon><span>&nbsp;Home</span></a> 
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="table-responsive" >
+        <form role="form">
+            <table class="table">
+				<thead>
+					<tr>
+						<th width="20%">Plan: <input type="text" class="form-control"
+							name="auditPlanEntity" [(ngModel)]="searchaudit.auditPlanEntity"
+							maxlength="50" placeholder="Search by Plan.."></th>
+						<th width="20%">Assign To:<select class="form-control"
+							name="assignTo" [(ngModel)]="searchaudit.assignTo">
+								<option [value]="0">Select AssignTo</option>
+								<option *ngFor="let user of userList" [value]="user.id">{{
+									user.firstName}}&nbsp;{{user.lastName}}</option>
+						</select></th>
+						<th width="20%">Start Date:<input type="date"
+							class="form-control" name="startDate"
+							[(ngModel)]="searchaudit.start_date" maxlength="50"
+							placeholder="Search by Start Date.."></th>
+						<th width="20%">End Date:<input type="date"
+							class="form-control" name="endDate"
+							[(ngModel)]="searchaudit.end_date" maxlength="50"
+							placeholder="Search by End Date.."></th>
+						<th width="20%">Remarks:<input type="text"
+							class="form-control" name="remarks"
+							[(ngModel)]="searchaudit.remarks" maxlength="50"
+							placeholder="Search by Remarks.."></th>
+						<th width="15%"><span><button type="submit"
+									class="btn btn-warning srch_btn"
+									(click)="getAllPlan(0,searchaudit)">Search</button></span></th>
+						<th width="12%"><span *ngIf="auditplans && auditplans.length>0" ><button type="button"
+									class="btn btn-success" (click)="downLoadCSV()">
+									<fa-icon [icon]="'download'"></fa-icon>
+								</button></span></th>
+						<th width="15%"></th>
+					</tr>
+					
+				</thead>
+			</table>
+        </form>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Select</th>
+                <th>Auditable Plans</th>
+                <th><span>Assign To</span></th>
+                <th><span>Start Date</span></th>
+                <th><span>End Date</span></th>
+                <th><span>Remarks</span></th>
+                <th><span>Created Date</span></th>
+                 <th></th>
+            </tr>
+        </thead>
+            <tbody>
+            <tr *ngFor="let plan of auditplans; let i = index">
+                <td><input [(ngModel)]="plan.isChecked" (change)="checkValue(plan, i)" type="checkbox"/> </td>
+                <td>{{plan.auditPlanEntity}}</td>
+
+                <!-- <td><a (click)="showobjectId == plan.id? showobjectId = 0 : showobjectId = plan.id;">{{plan.auditPlanEntity}}</a></td> -->
+                <!-- <tr colspan=9  [hidden]="!(showobjectId == plan.id)" *ngIf="plan.auditPlanObjectiveData">
+                    <table>
+                        <tr>
+                            <th>Objective</th>
+                            <th>Objective Description</th>
+                            <th>Status</th>
+                        </tr>
+                        <tr *ngFor="let objective of plan.auditPlanObjectiveData">
+                            <td>{{objective.objectiveName}}</td>
+                            <td>{{objective.objectiveDescription}}</td>
+                            <td>{{objective.active}}</td>
+                        </tr>
+                    </table>
+                </tr> -->
+                <td>{{plan.assignTo.firstName}}</td>
+                <td>{{plan.startDate }}</td>  
+                <td>{{plan.endDate}}</td>  
+                <td>{{plan.remarks}}</td>
+                <td>{{plan.createdDate | date:'dd/MM/yy HH:mm'}}</td>
+                <!--<td> <span *ngIf = "!plan.lastModifiedBy">{{'NA'}}</span><span  *ngIf = "plan.lastModifiedBy">{{plan.lastModifiedBy.firstName}}</span></td>
+                <td>{{plan.lastModifiedDate | date:'dd/MM/yy HH:mm'}}</td>
+                 <td>
+                    <button class="btn btn-danger btn-sm" (click)="setActive(plan, true)" *ngIf="!plan.isActive"
+                            jhiTranslate="userManagement.deactivated">Deactivated</button>
+                    <button class="btn btn-success btn-sm" (click)="setActive(plan, false)" *ngIf="plan.isActive"  
+                    jhiTranslate="userManagement.activated">Activated</button>
+                </td> -->
+                <td>
+                    <div class="btn-group flex-btn-group-container float-left">
+                       
+                        <button type="submit"
+                        (click)="editPlan(plan.id)"
+                                queryParamsHandling="merge"
+                                class="btn btn-outline-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>&nbsp;&nbsp;
+                      <button *ngIf="plan.showReminder" type="button" class="btn btn-outline-danger btn-sm" (click)="sendReminder(plan.id)">
+                      		<fa-icon [icon]="'bell'"></fa-icon>
+                            <span class="d-none d-md-inline">Reminder</span>
+                        </button>
+                    </div>
+                </td>
+                </tr>
+                <tr *ngIf=" !auditplans ||  auditplans.length<=0" >
+                		<td  colspan="8" style="text-align: center;color: red;"> No data found</td>
+                	</tr>
+            </tbody>
+        </table>
+        <button type="button" *ngIf="totalCount!= 0 && page< totalCount-1" class="btn btn-primary" (click)="loadMore()">More</button>
+        
+    </div>
+</div>

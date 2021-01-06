@@ -1,0 +1,95 @@
+<div>
+    <h2>
+        <span id="user-management-page-heading">Audit Plan</span>
+        <button class="btn btn-sm btn-outline-primary float-right jh-create-entity margin10" [routerLink]="['./new/0']">
+            <fa-icon [icon]="'plus'"></fa-icon> <span>Create a Audit Plan</span>
+        </button>
+        <button *ngIf="auditProcedureList && auditProcedureList.length>0" class="btn btn-sm btn-outline-info float-right jh-create-entity margin10" (click)="bulkUpdateModal()">
+            <fa-icon [icon]="'edit'"></fa-icon> <span>Perform Bulk Update</span>
+        </button>
+		<a class="btn float-right btn-sm btn-outline-warning margin10" routerLink="/">
+            <fa-icon [icon]="'home'"></fa-icon><span>&nbsp;Home</span></a> 
+	</h2>
+    <jhi-alert></jhi-alert>
+    <jhi-alert-error></jhi-alert-error>
+    <div class="table-responsive" >
+        	<form  role="form" >
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th width="33%">Title: <input type="text" class="form-control" name="name" [(ngModel)]="searchProcedure.procedureTitle" maxlength="50" placeholder="Search by Title.."></th>
+	                                <th width="33%">Description: <input type="text" class="form-control" name="email" [(ngModel)]="searchProcedure.procedureDescription" maxlength="50" placeholder="Search by Description.."></th>
+									<th width="15%">
+										<span>
+											<button type="submit"
+												class="btn btn-warning srch_btn"
+												(click)="getIntialProcedures(0,searchProcedure)">Search
+											</button>
+										</span>
+										<span >
+											<button
+												type="button" class="btn btn-success" (click)="downLoadCSV()">
+												<fa-icon [icon]="'download'"></fa-icon>
+											</button>
+										</span>
+									</th>
+						</tr>
+                        </thead>
+                    </table>
+            </form>
+        <table class="table table-striped">
+            <thead>
+	            <tr>
+	                <th>Select</th>
+	                <th>No</th>
+	                <th>Title</th>
+	                <th>Description</th>
+	                <th>Department</th>
+	                <th>Cost Center</th>
+	                <th>Objective</th>
+	                <!-- <th>Status</th> -->
+	                <th ></th>
+	            </tr>
+            </thead>
+            <tbody >
+            	<tr *ngFor="let plan of auditProcedureList; let i = index">
+	                <td><input type="checkbox" [(ngModel)]="plan.isChecked" (change)="checkProc(plan, i)"/></td>
+					<td>{{i+1}}</td>
+	                <td>{{plan.procedureTitle}}</td>
+	                <td>{{plan.procedureDescription}}</td>
+	                <td>{{plan.departmentName}}</td>
+	                <td>{{plan.costCentreName}}</td>
+	                <td><a [routerLink]="['/auditprocedure/showProcedure', plan.id]" >View Objective</a></td>
+	                <!-- <td>
+	                    <button class="btn btn-outline-danger btn-sm" (click)="setActive(plan, true)" *ngIf="!plan.active"
+	                            jhiTranslate="userManagement.deactivated">Deactivated</button>
+	                    <button class="btn btn-outline-success btn-sm" (click)="setActive(plan, false)" *ngIf="plan.active"  
+	                    jhiTranslate="userManagement.activated">Activated</button>
+	                </td> -->
+	                <!-- <td>
+	                    <label class="alert-danger"  *ngIf="!plan.active">Deactivated</label>
+	                    <label class="alert-success"  *ngIf="plan.active">Activated</label>
+	                </td> -->
+	                <td class="text-left">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit" (click)="editProcedure(plan.id)" queryParamsHandling="merge" class="btn btn-outline-primary btn-sm">
+                                <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                <span class="d-none d-md-inline">Edit</span>
+                            </button>
+                            <!-- <button type="button" (click)="deleteProcedure(plan.id)" class="btn btn-outline-danger btn-sm" >
+                                <fa-icon [icon]="'trash'"></fa-icon>
+                                <span class="d-none d-md-inline" >Delete</span>
+                            </button> -->
+                        </div>
+                    </td>
+                </tr>
+                <tr *ngIf=" !auditProcedureList ||  auditProcedureList.length<=0" >
+                	<td  colspan="8" style="text-align: center;color: red;"> No data found</td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="button" *ngIf="totalCount!= 0 && page< totalCount-1" class="btn btn-primary" (click)="loadMore()">More</button>
+        
+        
+    </div>
+</div>

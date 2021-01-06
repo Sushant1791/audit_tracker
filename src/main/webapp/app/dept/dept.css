@@ -1,0 +1,172 @@
+/* ==========================================================================
+Main page styles
+========================================================================== */
+
+.hipster {
+    display: inline-block;
+    width: 347px;
+    height: 497px;
+    background: url('../../content/images/hipster.png') no-repeat center top;
+    background-size: contain;
+}
+
+/* wait autoprefixer update to allow simple generation of high pixel density media query */
+@media only screen and (-webkit-min-device-pixel-ratio: 2),
+    only screen and (-moz-min-device-pixel-ratio: 2),
+    only screen and (-o-min-device-pixel-ratio: 2/1),
+    only screen and (min-resolution: 192dpi),
+    only screen and (min-resolution: 2dppx) {
+    .hipster {
+        background: url('../../content/images/hipster2x.png') no-repeat center top;
+        background-size: contain;
+    }
+}
+
+.btn-glyphicon {
+    padding: 8px;
+    background: #ffffff;
+    margin-right: 4px;
+}
+.icon-btn {
+    padding: 1px 15px 3px 2px;
+    border-radius: 50px;
+}
+
+.middle {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    text-align: center !important;
+    text-shadow: 2px 2px 4px #000000 !important;
+}
+
+/* Position text in the top-left corner */
+.topleft {
+    position: absolute;
+    top: 0;
+    left: 16px;
+}
+
+/* Float four columns side by side */
+.column {
+    width: 100%;
+}
+
+.column50 {
+    float: left;
+    width: 40%;
+    padding: 0 10px;
+}
+
+/* Responsive columns */
+@media screen and (max-width: 1000px) {
+    .column {
+        width: 100%;
+        display: block;
+        margin-bottom: 20px;
+    }
+}
+
+div > div > div > table > tr > td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+/* Style the counter cards */
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    text-align: center;
+    background-color: #acd4cd; /* For browsers that do not support gradients */
+    background-image: linear-gradient(#acd4cd, white);
+    margin-bottom: 20px;
+}
+.card:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.8);
+}
+
+.panel-box {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    border: medium none;
+}
+
+.panel-box .panel-icon {
+    display: table-cell;
+    padding: 29px;
+    width: 1%;
+    vertical-align: top;
+    border-radius: 0px;
+    text-align: center;
+    border-bottom: 1px solid #fcfcfc;
+    border-top: 1px solid #fcfcfc;
+    border-right: 1px solid #fcfcfc;
+}
+
+.dashboard-stats .stat-icon {
+    line-height: 65px;
+}
+
+.bg-success {
+    background-color: #a3c86d !important;
+    color: #fff !important;
+}
+
+.success-text {
+    color: #82b33a;
+}
+
+.bg-danger {
+    background-color: #ff7857 !important;
+    color: #fff !important;
+}
+
+.danger-text {
+    color: #d15b3d;
+}
+
+.bg-lovender {
+    background-color: #8075c4 !important;
+    color: #fff !important;
+}
+
+.lovender-text {
+    color: #6a5fb1;
+}
+
+.bg-info {
+    background-color: #7acbee !important;
+    color: #fff !important;
+}
+
+.info-text {
+    color: #3ca0cb;
+}
+
+.size-h1 {
+    font-size: 30px;
+}
+
+.panel-icon p.text {
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+}
+
+.panel-icon i {
+    text-align: center;
+}
+
+.panel-icon i {
+    text-align: center;
+}
+
+.text-large {
+    font-size: 50px;
+}
+
+.text-large {
+    font-size: 50px;
+}

@@ -1,0 +1,104 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 [hidden]="!user.id" id="myUserLabel">
+                Update User
+            </h2>
+            <h2 [hidden]="user.id" id="myUserLabel">
+                Create User
+            </h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group">
+                    <label class="form-control-label">Full Name</label>
+                    <input type="text" class="form-control" name="firstName" #firstNameInput="ngModel" [(ngModel)]="user.firstName" maxlength="50" required>
+                    <div *ngIf="firstNameInput.dirty && firstNameInput.invalid">
+                        <small class="form-text text-danger" *ngIf="firstNameInput.errors.maxlength" >
+                            Full name cannot be longer than 50 characters.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="firstNameInput.errors.required">
+                            Full name is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="userManagement.email">Email</label>
+                    <input type="email" class="form-control" name="email" #emailInput="ngModel"
+                        [(ngModel)]="user.email" minlength="5" required maxlength="254" email>
+
+                    <div *ngIf="emailInput.dirty && emailInput.invalid">
+                        <small class="form-text text-danger" *ngIf="emailInput.errors.required">
+                            Email is required.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="emailInput.errors.maxlength" >
+                            Email cannot be longer than 100 characters.
+                        </small>
+						<small class="form-text text-danger" *ngIf="emailInput.errors.minlength">
+                            Email is required to be at least 5 characters.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="emailInput.errors.email">
+                            Email is invalid.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">Designation</label>
+                    <input type="text" class="form-control" name="designation" #designationInput="ngModel" [(ngModel)]="user.designation" maxlength="50" required>
+                    <div *ngIf="designationInput.dirty && designationInput.invalid">
+                        <small class="form-text text-danger" *ngIf="designationInput.errors.maxlength" >
+                            Designation cannot be longer than 50 characters.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="designationInput.errors.required">
+                            Full name is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-check" [hidden]="user.id === null">
+                    <label class="form-check-label" for="activated">
+                        <input class="form-check-input"  type="checkbox" id="activated" name="activated" [(ngModel)]="user.activated">
+                        <span jhiTranslate="userManagement.activated">Activated</span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <select class="form-control" id="location" name="location" [(ngModel)]="user.locationId" required>
+                        <option *ngFor="let location of locationList" [value]="location.id">{{location.locationName}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group" [hidden]="languages && languages.length > 0">
+                    <label jhiTranslate="userManagement.langKey">Lang Key</label>
+                    <select class="form-control" id="langKey" name="langKey" [(ngModel)]="user.langKey">
+                        <option *ngFor="let language of languages" [value]="language">{{language | findLanguageFromKey}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    <select class="form-control"  name="authority" [(ngModel)]="user.authorities" required>
+                    	<option *ngFor="let authority of authorities" [value]="authority">{{authority == 'ROLE_ADMIN' ? "ADMIN" : "NORMAL"}}</option>
+                    </select>
+                </div>
+                <div class="form-group" >
+                     <label class="form-check-label" for="isAuditor">
+                        <input class="form-check-input"  type="checkbox" id="isAuditor" name="isAuditor" [(ngModel)]="isAuditor">
+                        <span >Do you want to mark this employee as <b>Auditor</b>?</span>
+                    </label>
+                </div>
+                <div class="form-group" *ngIf="isAuditor">
+                    <select class="form-control"  name="reportingUserId" [(ngModel)]="user.reporting_user_id" required>
+                        <option *ngFor="let u of userList" [value]="u.id">{{u.firstName}}&nbsp;{{u.lastName}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span
+                    jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

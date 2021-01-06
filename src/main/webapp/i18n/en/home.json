@@ -1,0 +1,19 @@
+{
+    "home": {
+        "title": "Welcome to Audit Tracker!",
+        "subtitle": "This is your homepage",
+        "logged": {
+            "message": "You are logged in as user \"{{username}}\"."
+        },
+        "question": "If you have any question on Audit Tracker:",
+        "link": {
+            "homepage": "Audit Tracker homepage",
+            "stackoverflow": "Audit Tracker on Stack Overflow",
+            "bugtracker": "Audit Tracker bug tracker",
+            "chat": "Audit Tracker public chat room",
+            "follow": "follow Audit Tracker on Twitter"
+        },
+        "like": "If you like Audit Tracker, don't forget to give us a star on",
+        "github": "GitHub"
+    }
+}

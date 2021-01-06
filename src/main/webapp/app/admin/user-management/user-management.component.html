@@ -1,0 +1,101 @@
+<div>
+    <h2>
+        <span id="user-management-page-heading" jhiTranslate="userManagement.home.title">Users</span>
+        <button class="btn btn-primary float-right jh-create-entity" [routerLink]="['./new']">
+            <fa-icon [icon]="'plus'"></fa-icon> <span>Create</span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="table-responsive" *ngIf="users">
+    	<form  role="form" >
+    		<table class="table">
+    			<thead>
+    				<tr>
+    					<th width="38%"><input type="text" class="form-control" name="name" [(ngModel)]="searchuser.firstName" maxlength="12" placeholder="Search by Name.."></th>
+	    				<th width="18%"><input type="text" class="form-control" name="email" [(ngModel)]="searchuser.email" maxlength="50" placeholder="Search by Email.."></th>
+	    				<th width="18%"><input type="text" class="form-control" name="designation" [(ngModel)]="searchuser.designation" maxlength="50" placeholder="Search by Designation.."></th>
+	    				<th width="18%">
+	    					<!-- <select class="form-control"  name="location" [(ngModel)]="searchuser.locationId">
+                        		<option [value]="0">Select Location</option>
+                        		<option [value]="1">Mumbai</option>
+                        		<option [value]="2">Vadodara</option>
+                    		</select> -->
+                    		<select class="form-control" name="location" [(ngModel)]="searchuser.locationId">
+                    			<option [value]="0">Select Location</option>
+                        		<option *ngFor="let location of locationList" [value]="location.id">{{location.locationName}}</option>
+                    		</select>
+	   					</th>
+				        <th width="15%"><span><button type="submit" class="btn btn-warning srch_btn" (click)="getAllUsers(0,searchuser)">Search</button></span></th>
+                        <th width="12%"><span><button type="button" class="btn btn-success" (click) = "downLoadCSV()"><fa-icon [icon]="'download'"></fa-icon></button></span>
+                        </th>
+				        <th width="15%"></th>
+	    			</tr>
+    			</thead>
+    		</table>
+   		</form> 
+    
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th><span>Name</span></th>
+                <th><span>Email</span></th>
+                <th>Status</th>
+                <th>Role</th>
+                <th>Designation</th>
+                <th>Location</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody *ngIf ="users">
+            <tr *ngFor="let user of users; trackBy: trackIdentity">
+                <td>{{user.firstName}}</td>
+                <td>{{user.email}}</td>
+                <td>
+                    <button class="btn btn-danger btn-sm" (click)="setActive(user, true)" *ngIf="!user.activated"
+                            jhiTranslate="userManagement.deactivated">Deactivated</button>
+                    <button class="btn btn-success btn-sm" (click)="setActive(user, false)" *ngIf="user.activated"
+                            [disabled]="currentAccount.login === user.login" jhiTranslate="userManagement.activated">Activated</button>
+                </td>
+                <td>
+                    <div *ngFor="let authority of user.authorities">
+                        <span class="badge badge-info">{{ authority == 'ROLE_ADMIN' ? "ADMIN" : "NORMAL" }}</span>
+                    </div>
+                </td>
+                <td>{{user.designation}}</td>
+                <td>{{user.locationMaster.locationName}}</td>
+                <td class="text-left">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['./', user.login, 'view']"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['./', user.login, 'edit']"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="button" (click)="deleteUser(user)"
+                                class="btn btn-danger btn-sm" [disabled]="currentAccount.login === user.login">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <button type="button" *ngIf="totalCount!= 0 && page< totalCount-1" class="btn btn-primary" (click)="loadMore()">More</button>
+    </div>
+    <!-- <div *ngIf="users">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div> -->
+</div>

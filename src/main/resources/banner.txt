@@ -1,0 +1,19 @@
+                                                                                                                                   
+                                                                                                                                         
+               AAA                    MMMMMMMM               MMMMMMMM          OOOOOOOOO          LLLLLLLLLLL                  IIIIIIIIII
+              A:::A                   M:::::::M             M:::::::M        OO:::::::::OO        L:::::::::L                  I::::::::I
+             A:::::A                  M::::::::M           M::::::::M      OO:::::::::::::OO      L:::::::::L                  I::::::::I
+            A:::::::A                 M:::::::::M         M:::::::::M     O:::::::OOO:::::::O     LL:::::::LL                  II::::::II
+           A:::::::::A                M::::::::::M       M::::::::::M     O::::::O   O::::::O       L:::::L                      I::::I  
+          A:::::A:::::A               M:::::::::::M     M:::::::::::M     O:::::O     O:::::O       L:::::L                      I::::I  
+         A:::::A A:::::A              M:::::::M::::M   M::::M:::::::M     O:::::O     O:::::O       L:::::L                      I::::I  
+        A:::::A   A:::::A             M::::::M M::::M M::::M M::::::M     O:::::O     O:::::O       L:::::L                      I::::I  
+       A:::::A     A:::::A            M::::::M  M::::M::::M  M::::::M     O:::::O     O:::::O       L:::::L                      I::::I  
+      A:::::AAAAAAAAA:::::A           M::::::M   M:::::::M   M::::::M     O:::::O     O:::::O       L:::::L                      I::::I  
+     A:::::::::::::::::::::A          M::::::M    M:::::M    M::::::M     O:::::O     O:::::O       L:::::L                      I::::I  
+    A:::::AAAAAAAAAAAAA:::::A         M::::::M     MMMMM     M::::::M     O::::::O   O::::::O       L:::::L         LLLLLL       I::::I  
+   A:::::A             A:::::A        M::::::M               M::::::M     O:::::::OOO:::::::O     LL:::::::LLLLLLLLL:::::L     II::::::II
+  A:::::A               A:::::A       M::::::M               M::::::M      OO:::::::::::::OO      L::::::::::::::::::::::L     I::::::::I
+ A:::::A                 A:::::A      M::::::M               M::::::M        OO:::::::::OO        L::::::::::::::::::::::L     I::::::::I
+AAAAAAA                   AAAAAAA     MMMMMMMM               MMMMMMMM          OOOOOOOOO          LLLLLLLLLLLLLLLLLLLLLLLL     IIIIIIIIII
+                                                                                                                                         

@@ -1,0 +1,113 @@
+<div>
+    <h2>
+        <span id="user-management-page-heading">Audit Testing</span>
+         &nbsp;
+        <button class="btn btn-sm btn-outline-primary float-right margin10 jh-create-entity" [routerLink]="['./new/0']">
+            <fa-icon [icon]="'plus'"></fa-icon> <span>Create Audit Testing</span>
+        </button>
+        <button *ngIf="auditTestingList && auditTestingList.length > 0"  class="btn btn-sm btn-outline-info float-right margin10 jh-create-entity" (click)="bulkUpdateModal()">
+            <fa-icon [icon]="'edit'"></fa-icon> <span>Perform Bulk Update</span>
+        </button>
+        
+            <a class="btn float-right btn-sm btn-outline-warning margin10" routerLink="/"> 
+            <fa-icon [icon]="'home'"></fa-icon><span>&nbsp;Home</span></a> 
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="table-responsive" >
+		<form role="form">
+			<table class="table">
+				<thead>
+					<tr>
+						<th width="15%">Audit Plan Name <input type="text"
+							class="form-control" name="auditPlan"
+							[(ngModel)]="searchTestingPlan.auditPlanEntity" maxlength="12"
+							placeholder="Search by Audit Plan.."></th>
+						<th width="15%">From Expected Revert Date <input type="date"
+							class="form-control" name="start_date"
+							[(ngModel)]="searchTestingPlan.start_date"></th>
+						<th width="15%">To Expected Revert Date <input type="date"
+							class="form-control" name="end_date"
+							[(ngModel)]="searchTestingPlan.end_date" maxlength="50"></th>
+						<th width="15%">Auditee <select class="form-control"
+							name="searchTestingPlanAuditee"
+							[(ngModel)]="searchTestingPlan.auditee">
+								<option [value]="0">Search by Auditee</option>
+								<option *ngFor="let u of userList" [value]="u.id">{{u.firstName}}&nbsp;{{u.lastName}}</option>
+						</select>
+						</th>
+						<th width="15%">Auditor <select class="form-control" name="searchTestingPlanAuditor"
+							[(ngModel)]="searchTestingPlan.auditor">
+								<option [value]="0">Search by Auditor</option>
+								<option *ngFor="let u of userList" [value]="u.id">{{u.firstName}}&nbsp;{{u.lastName}}</option>
+						</select>
+						</th>
+						<th width="35%">
+							<span>
+								<button type="submit"
+									class="btn btn-warning srch_btn"
+									(click)="getAllTestingPlans(0,searchTestingPlan)">Search
+								</button>
+							</span>
+							<span *ngIf="auditTestingList && auditTestingList.length > 0">
+								<button type="button" class="btn btn-success" (click)="downLoadCSV()">
+            							<fa-icon [icon]="'download'"></fa-icon>
+        						</button>
+        					</span>
+						</th>
+						<th width="15%"></th>
+					</tr>
+				</thead>
+			</table>
+		</form>
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Select</th>
+					<th>Audit Plan Name</th>
+					<th>Expected Revert Date</th>
+					<th>Auditee Name</th>
+					<th>Auditor Name</th>
+					<th>Action Taken</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let plan of auditTestingList; let i = index">
+					<td><span *ngIf="plan.locked"><fa-icon [icon]="'lock'"></fa-icon></span>
+						<input *ngIf="!plan.locked" type="checkbox"
+						[(ngModel)]="plan.isChecked" (change)="checkTesting(plan, i)" /></td>
+
+					<td *ngIf="plan.auditPlanLinked">{{plan.auditPlanEntity}}</td>
+					<td *ngIf="!plan.auditPlanLinked">{{plan.testDescription}}</td>
+					<td>{{plan.expectedRevertDate}}</td>
+					<td>{{plan.auditeeName}}</td>
+					<td>{{plan.auditorName}}</td>
+					<td>{{plan.actionTaken}}</td>
+					<td class="text-center">
+						<div class="text-center btn-group flex-btn-group-container">
+							<button type="submit" (click)="editTesting(plan.id)"
+								queryParamsHandling="merge"
+								class="btn  btn-outline-primary btn-sm">
+								<fa-icon [icon]="'pencil-alt'"></fa-icon>
+								<span class="d-none d-md-inline">View</span>
+							</button>
+							&nbsp;
+							<button *ngIf="!plan.locked" type="submit"
+								(click)="sendAuditeeReminder(plan.id)"
+								queryParamsHandling="merge"
+								class="btn  btn-outline-danger btn-sm">
+								<fa-icon [icon]="'bell'"></fa-icon>
+								<span class="d-none d-md-inline">Send Reminder</span>
+							</button>
+						</div>
+					</td>
+				</tr>
+				<tr *ngIf=" !auditTestingList ||  auditTestingList.length<=0" >
+                	<td  colspan="7" style="text-align: center;color: red;"> No data found</td>
+                </tr>
+			</tbody>
+		</table>
+		<button type="button" *ngIf="totalCount!= 0 && page< totalCount-1" class="btn btn-primary" (click)="loadMore()">More</button>
+    </div>
+</div>

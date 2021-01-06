@@ -1,0 +1,214 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="auditPlanLabel">
+                
+                <span *ngIf="id && id != 0">Edit</span>
+            	<span *ngIf="id==0">Assign Audit Plan to Auditor</span>	
+                
+                
+                <button class="btn float-right btn-sm btn-outline-warning margin10" (click)="previousState()">
+					<fa-icon [icon]="'arrow-circle-left'"></fa-icon>
+					&nbsp;Back
+				</button>
+            </h2>
+            <div>
+            <jhi-alert-error></jhi-alert-error>
+                <jhi-alert></jhi-alert>
+                <!-- <jhi-alert-error></jhi-alert-error>
+                    <div *ngIf="auditplan.id" class="form-group" [hidden]="!auditplan.id">
+                        <label>Id</label>
+                        <input type="text" class="form-control" name="id"
+                            [(ngModel)]="auditplan.id" readonly>
+                    </div> -->
+
+                <div class="form-group">
+                    <label class="form-control-label">Title<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="title" #titleInput="ngModel" [(ngModel)]="auditPlanEntity"
+                        required minlength="1" maxlength="50">
+
+                    <div *ngIf="titleInput.dirty && titleInput.invalid">
+                        <small class="form-text text-danger" *ngIf="titleInput.errors.required">
+                            Title is required.
+                        </small>
+
+                        <small class="form-text text-danger" *ngIf="titleInput.errors.maxlength" translateValues="{max: 50}">
+                            Title cannot be longer than 50 characters.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-check-label padding25" for="attachAuditPlan">
+                        <span><b>Do you want to link this audit with plan</b>?</span></label>
+                     <input class="form-check-input margintop6" type="checkbox"  [disabled]="id != 0" id="attachAuditPlan" name="attachAuditPlan" [(ngModel)]="attachAuditPlan">
+                </div>
+                <div class="form-group" *ngIf="attachAuditPlan">
+                    <label>Assign Audit Plan</label>
+                    <select class="form-control" id="procedure" name="procedure" [(ngModel)]="selected_procedureId"
+                        (ngModelChange)="onChange($event)" required [disabled]="id != 0">
+                        <option *ngFor="let entity of auditProcedureList" [value]="entity.id">{{ entity.procedureTitle }}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">Department</label>
+                    <select class="form-control" id="department" name="department" [(ngModel)]="selectedDepartmentId" required>
+                        <option *ngFor="let entity of departList" [value]="entity.id">{{entity.deptName}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">Cost Center</label>
+                    <select class="form-control" id="costcentre" name="costcentre" [(ngModel)]="selectedCostCenterId" required>
+                        <option *ngFor="let entity of costCentreList" [value]="entity.id">{{entity.costCentreName}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Location</label>
+                    <select class="form-control" id="location" name="location" [(ngModel)]="locationId" required>
+                        <option *ngFor="let location of locationList" [value]="location.id">{{location.locationName}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Assign To</label>
+                    <select #auditplan class="form-control" id="assignTo" required name="assignTo" [(ngModel)]="selected_assignTo">
+                        <option *ngFor="let user of userList" [value]="user.id">{{ user.firstName
+                            }}&nbsp;{{user.lastName}}</option>
+                    </select>
+
+                    <div *ngIf="auditplan.dirty && auditplan.invalid">
+                        <small class="form-text text-danger" *ngIf="titleInput.errors.required">
+                            Assignee is required.
+                        </small>
+
+                        
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">Start Date</label>
+                    <input type="date" class="form-control" name="start"  [(ngModel)]="startDate"  required />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">End Date</label>
+                    <input type="date" class="form-control" name="end" [(ngModel)]="endDate" required />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">Remarks</label>
+                    <textarea type="text" class="form-control" minlength="1" maxlength="255" name="remarks" [(ngModel)]="remarks"
+                        required> </textarea>
+                </div>
+                <div>
+                    <ul *ngFor = "let obj of procedureObjective.auditProcedureObjectiveData;">
+                        <li title = "{{ obj.objectiveDescription }}">{{ obj.objectiveName}}</li>
+                    </ul>
+                </div>
+               <!--  <div class="form-group">
+                    <button type="button" class="btn btn-primary" value="" (click)="addObjective()">
+                    <fa-icon [icon]="'plus'"></fa-icon>&nbsp; Add Objective
+                    </button>
+                </div>
+                <div *ngFor="let objective of objectiveData; let i = index;">
+                    <div class="form-group">
+                        <div class="col-8">
+                            <label class="form-control-label">Objective Name<span class="text-danger">*</span>
+                                <button (click)="deleteObjective(i)" class="btn btn-danger"><fa-icon [icon]="'times'"></fa-icon></button>
+                            </label>                            
+                            <input type="text" class="form-control" name="name" [(ngModel)]="objective.objectiveName">
+                            <label class="form-control-label">Objective Description<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="description" [(ngModel)]="objective.objectiveDescription">
+                        </div>
+                    </div>
+                </div>
+                attachAuditPlan
+                 -->
+                
+                <figcaption>
+					<h6><b><u>Objective</u></b></h6>
+					<hr>
+					<fieldset>
+						<div class="form-group" *ngIf="showObj">
+							<label class="form-control-label">Objective Name<span
+								class="text-danger">*</span></label> 
+								
+								<span *ngIf="attachAuditPlan">
+									<input type="text"
+									class="form-control" name="objname" #objNameInput="ngModel"
+									[(ngModel)]="auditProcedureObjectiveDataParams.objectiveName"
+								 	 />
+								</span>
+								<span *ngIf="!attachAuditPlan">
+									<input type="text"
+									class="form-control" name="objname" #objNameInput="ngModel"
+									[(ngModel)]="auditProcedureObjectiveDataParams.objectiveName"
+								 	required />
+								</span>
+								 
+								 
+						</div>
+						<div class="form-group" *ngIf="showObj">
+							<label class="form-control-label">Objective Description<span
+								class="text-danger">*</span></label> 
+								
+								<span *ngIf="attachAuditPlan">
+									<input type="text"
+									class="form-control" name="objdescription"
+									#objDescInput="ngModel"
+									[(ngModel)]="auditProcedureObjectiveDataParams.objectiveDescription"
+									 />
+								</span>
+								<span *ngIf="!attachAuditPlan">
+									<input type="text"
+									class="form-control" name="objdescription"
+									#objDescInput="ngModel"
+									[(ngModel)]="auditProcedureObjectiveDataParams.objectiveDescription" required
+									 />
+								</span>
+								
+						</div>
+
+						<button type="button" class="btn btn-primary"
+							(click)="addObjective()" *ngIf="id == 0">
+							</fa-icon>
+							&nbsp; <span *ngIf="auditProcedureObjectiveData.length>0 && !showObj">Add More Objective</span> 
+								<span *ngIf="(auditProcedureObjectiveData.length>0 && showObj) || (auditProcedureObjectiveData.length<=0 && showObj)">Save Objective</span>
+								<span *ngIf="auditProcedureObjectiveData.length<=0 && !showObj">Add Objective</span>
+						</button>
+						<button (click)="showObjective(false)" class="btn btn-danger"
+							*ngIf="auditProcedureObjectiveData.length>0 && showObj && id == 0">
+							CANCEL</button>
+
+
+
+						<table class="table table-striped" *ngIf ="auditProcedureObjectiveData && auditProcedureObjectiveData.length > 0">
+							<thead>
+					            <tr>
+					                <th>Objective Name</th>
+					                <th>Objective Description</th>
+					                <th></th>
+					            </tr>
+					      	</thead>
+					      	<tbody *ngIf ="auditProcedureObjectiveData">
+					      		<tr *ngFor="let objective of auditProcedureObjectiveData; let i = index;">
+					      			<td>{{objective.objectiveName}}</td>
+					      			<td>{{objective.objectiveDescription}}</td>
+					      			<td align="center"><button (click)="deleteObjective(i)" *ngIf="id == 0" class="btn btn-danger">Remove</button>
+									</td>
+					      		</tr>
+					      	</tbody>
+						</table>
+					</fieldset>
+				</figcaption>
+                
+                
+            </div>
+            <div class="padtop10">
+                <button type="button" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

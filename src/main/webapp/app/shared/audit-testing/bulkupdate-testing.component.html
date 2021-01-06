@@ -1,0 +1,76 @@
+<div class="modal-header">
+    <h4 class="modal-title" jhiTranslate="bulkupdate.title">Actions</h4> &nbsp;
+    <h4 class="modal-title" jhiTranslate="bulkupdate.auditplan.title">audit plan</h4>
+    <!-- <button aria-label="Close" data-dismiss="modal" class="close" type="button" (click)="activeModal.dismiss('closed')"><span
+            aria-hidden="true">x</span>
+    </button> -->
+    <button aria-label="Close" data-dismiss="modal" class="close" type="button" (click)="clear()"><span
+            aria-hidden="true">x</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form class="form" role="form" (ngSubmit)="bulkUpdate()">
+                <div class="form-group">
+                    <label class="form-control-label" for="actions">Actions</label>
+                    <select class="form-control" id="actions" name="actions" [(ngModel)]="selectedEntity"
+                        (ngModelChange)="onChange($event)">
+                        <option [value]="1">Update Department</option>
+                        <option [value]="2">Update Cost Center</option>
+                        <option [value]="3">Update Risk Area</option>
+                        <option [value]="4">Update Testing Result</option>
+                        <option [value]="5">Update Rating</option>
+                        <option [value]="6">Update Expected Revert Date</option>
+                        <option [value]="7">Update Auditee</option>
+                    </select>
+                </div>
+                <div class="form-group" [hidden]="!showCostCentre">
+                    <label class="form-control-label">Cost Centre</label>
+                    <select class="form-control" id="costCentre" name="costCentre" [(ngModel)]="selectedCostCenterId">
+                        <option *ngFor="let entity of costCentreList" value="{{entity.id}}">{{entity.costCentreName}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group" [hidden]="!showDepartment">
+                    <label class="form-control-label">Department</label>
+                    <select class="form-control" id="department" name="department" [(ngModel)]="selectedDepartmentId">
+                        <option *ngFor="let entity of departmentList" value="{{entity.id}}">{{ entity.deptName }}</option>
+                    </select>
+                </div>
+                <div class="form-group" [hidden]="!showRiskArea">
+                    <label class="form-control-label">Risk Area</label>
+                    <select class="form-control" id="riskArea" name="riskArea" [(ngModel)]="riskAreaValue">
+                        <option *ngFor="let entity of riskAreaList" value="{{entity.value}}">{{entity.area}}</option>
+                    </select>
+                </div>
+                <div class="form-group" [hidden]="!showTestingResult">
+                    <label class="form-control-label">Testing Result</label>
+                    <select class="form-control" id="testingResult" name="testingResult" [(ngModel)]="testingResultId">
+                        <option *ngFor="let entity of testingResultList" value="{{entity.value}}">{{entity.value}}</option>
+                    </select>
+                </div>
+                <div class="form-group" [hidden]="!showRating">
+                    <label class="form-control-label">Audit Rating</label>
+                    <select class="form-control" id="rating" name="rating" [(ngModel)]="rating">
+                        <option value="1">Critical</option>
+                        <option value="2">Non Critical</option>
+                    </select>
+                </div>
+                <div class="form-group" [hidden]="!showExpectedDate">
+                    <label class="form-control-label">Expected Revert Date</label>
+                    <input type="date" class="form-control" id="revertDate" [(ngModel)]="expectedRevertDate"
+                        placeholder="select date" name="revertDate">
+                </div>
+                <div class="form-group" [hidden]="!showAuditee">
+                    <label class="form-control-label">Response from Auditee</label>
+                    <select class="form-control" id="rating" name="rating" [(ngModel)]="selected_auditee">
+                        <option *ngFor="let user of userList" value="{{user.id}}">{{ user.firstName
+                            }}&nbsp;{{user.lastName}}</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn icon-btn btn-outline-primary">Update</button>
+            </form>
+        </div>
+    </div>
+</div>

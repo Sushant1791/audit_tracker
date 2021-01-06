@@ -1,0 +1,180 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+                <h2 id="auditTesting">
+                        Create Audit Testing Plan
+                         <button type="button" class ="btn btn-md btn-outline-warning float-right"  (click)="previousPageState()">
+                        <fa-icon [icon]="'arrow-circle-left'"></fa-icon>&nbsp;Back</button> 
+                </h2>
+                <div>
+                    <jhi-alert-error></jhi-alert-error>
+                    <div *ngIf="!auditTesting.responded" class="form-group" >
+                        <label class="form-check-label" for="auditPlanLinked">
+                           <input class="form-check-input"  type="checkbox" 
+                           id="auditPlanLinked" name="auditPlanLinked" (click)="showTestDescription()">
+                           <span ><i>If you want to use audit plan for this <b>Testing</b> </i>?</span>
+                       </label>
+                   </div>
+
+                   
+                <div *ngIf="!hideAuditPlans" class="form-group">
+                    <label class="form-control-label">Testing Description</label>
+                    <input [disabled]="auditTesting.responded" [(ngModel)]="auditTesting.testDescription" class="form-control" type="text" id="testDescription" name="testDescription">
+                    </label>
+                </div>
+                    <div *ngIf="hideAuditPlans" class="form-group">
+                        <label class="form-control-label">Audit Plan</label>
+                        <select  [disabled]="auditTesting.responded" class="form-control" id="auditPlan" value="auditTesting.auditPlanId"
+                            name="auditPlan" [(ngModel)]="auditTesting.auditPlanId" 
+                            (ngModelChange)="onChange($event)">
+                            <option *ngFor="let entity of auditplans" value={{entity.id}}>
+                            {{entity.auditPlanEntity}} ({{entity.locationName}})
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">Cost Centre</label>
+                        <select [disabled]="auditTesting.responded" class="form-control" id="costCentre" name="costCentre"
+                            [(ngModel)]="auditTesting.costCentreId" required>
+                            <option *ngFor="let entity of costCentreList" value={{entity.id}}>{{entity.costCentreName}}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-control-label">Department</label>
+                        <select [disabled]="auditTesting.responded" class="form-control" id="department" name="department"
+                            [(ngModel)]="auditTesting.deptartment" required>
+                            <option *ngFor="let entity of departmentList" value={{entity.id}}>{{ entity.deptName }}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">Risk Area</label>
+                        <select [disabled]="auditTesting.responded" class="form-control" id="riskArea" name="riskArea"
+                            [(ngModel)]="auditTesting.riskAreaId" required>
+                            <option *ngFor="let entity of riskAreaList" value={{entity.id}}>{{entity.risk}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">Testing Result</label>
+                        <select [disabled]="auditTesting.responded" class="form-control" id="testingResult" name="testingResult"
+                            [(ngModel)]="auditTesting.testResultId" required>
+                            <option *ngFor="let entity of testingResultList" value="{{entity.id}}">{{entity.testinResult}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">Audit Rating</label>
+                        <select [disabled]="auditTesting.responded" class="form-control" id="rating" name="rating"
+                            [(ngModel)]="auditTesting.rating" required>
+                            <option value="1">Critical</option>
+                            <option value="2">Non Critical</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">Expected Revert Date</label>
+                        <input [disabled]="auditTesting.responded" type="date" class="form-control" id="revertDate"
+                            [(ngModel)]="auditTesting.expectedRevertDate" placeholder="" name="revertDate" required>
+                    </div>
+                    <div *ngFor="let audit of testingObservations;trackBy: trackIdentity; let i = index">
+                        <form class="form-inline">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="observation">Observation&nbsp;</label>
+                                    <textarea type="text" class="form-control" id="observation" [(ngModel)]="audit.observation"
+                                        placeholder="Enter Observation" name="observation" required></textarea> 
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="findings">&nbsp;Findings / Inference &nbsp;</label>
+                                    <textarea type="text" class="form-control" id="findings" placeholder="Enter Findings/ Inference"
+                                        [(ngModel)]="audit.inference" name="findings" required></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label> Monetary Impact (INR)&nbsp;&nbsp;
+                                     <button type="button"
+											*ngIf="audit.deleteMe" class="btn btn-sm btn-outline-danger"
+											(click)="deleteLastAddedObservation(i)">
+											<fa-icon [icon]="'trash'"></fa-icon>
+										</button>
+									</label>
+                                    <input type="text" class="form-control" id="moneytary" placeholder="Enter Moneytary Impact"
+                                        [(ngModel)]="audit.monetaryImpact" name="moneytary" required>
+                                       
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>&nbsp;Audit Response &nbsp;</label>
+                                    <textarea type="text" class="form-control" id="auditeeresponse" placeholder="Enter Auditee Response Here"
+                                    [(ngModel)]="audit.auditeeResponse" name="auditeeresponse" disabled></textarea>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                    <button type="button" *ngIf="!auditTesting.responded || !auditTesting.locked" class="btn btn-secondary" (click)="addObjective()">
+                            <fa-icon [icon]="'plus'"></fa-icon>&nbsp;<span>Objective</span>
+                     </button>
+                    </div>
+                    <div class="form-group" *ngIf="!auditTesting.locked">
+                        <label>Attach</label>
+                        <input type="file" [(ngModel)]="auditTesting.path" class="form-control pad0" multiple="multiple"
+                            (change)="change($event)" name="files" accept=".jpg,.png,.JPG,.PNG,jpeg,.JPEG,.pdf,.PDF,.xlsx,.xls,.XLSX,.XLS"
+                            [ngModelOptions]="{standalone: true}"/>
+                    </div>
+                    <div class="form-group" *ngIf= "auditTesting.files.length > 0 && auditTesting.responded">
+                        <label class="form-control-label">Attachments</label>
+                        <div *ngFor ="let file of auditTesting.files;">
+                                <a (click)="downloadFileService(file , auditTesting.id)">
+                                        <fa-icon [icon]="'file-download'"></fa-icon> {{ file }}</a>
+                        </div>
+                    </div>
+					<div class="form-group">
+						<label class="form-control-label">Response from Auditee</label> <select
+							[disabled]="auditTesting.responded" class="form-control"
+							id="auditeeId" name="auditeeId"
+							[(ngModel)]="auditTesting.auditeeId" required>
+							<option *ngFor="let user of userList" value="{{user.id}}">{{
+								user.firstName }}&nbsp;{{user.lastName}}</option>
+						</select>
+					</div>
+					<div *ngIf="auditTesting.responded" class="form-group">
+                        <label class="form-control-label">Auditee Response</label>
+                        <p><i><b>{{ auditTesting.auditeeResponse}}</b></i></p>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">Action Taken</label>
+                        <select [disabled]="auditTesting.responded" class="form-control" id="action" name="action"
+                            [(ngModel)]="auditTesting.actionTakenId" required>
+                            <option *ngFor="let entity of actionTakenList" value="{{entity.id}}">{{entity.actionTaken}}</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-secondary" (click)="previousState()">
+                            <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <!-- <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary"> -->
+                        <button *ngIf="!auditTesting.locked" type="submit" [disabled]="editForm.form.invalid" class="btn btn-primary">
+                            <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                        </button>
+                        <button *ngIf="auditTesting.responded && !auditTesting.locked" type="button" class="btn btn-primary" (click)="lockAuditTesting()">
+                            <fa-icon [icon]="'lock'"></fa-icon>&nbsp;<span>Lock Testing</span>
+                        </button>
+						<div *jhiHasAnyAuthority="'ROLE_ADMIN'">
+							<button *ngIf="auditTesting.responded && auditTesting.locked"
+								type="button" class="btn btn-primary"
+								(click)="unlockAuditTesting()">
+								<fa-icon [icon]="'lock'"></fa-icon>
+								&nbsp;<span>UnLock Testing</span>
+							</button>
+						</div>
+					</div>
+            </form>
+        </div>
+    </div>
+</div>

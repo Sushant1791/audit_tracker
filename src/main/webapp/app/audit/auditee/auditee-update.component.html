@@ -1,0 +1,98 @@
+<div class="row">
+    <div class="container justify-content-center">
+        <div class="col-12">
+            <form name="editForm" role="form" novalidate (ngSubmit)="submitResponse()" #editForm="ngForm">
+                <h2 id="auditTesting">
+                    Query <a class="btn btn-outline-danger float-right"><span class="img-circle">Overdue Days {{
+                            auditTesting.overDueDays }}</span></a>
+                </h2>
+                <div>
+                    <jhi-alert-error></jhi-alert-error>
+                    <div class="form-group">
+                        <label class="form-control-label">Audit Plan</label>
+                        <input class="form-control" type="text" disabled id="AuditPlan" name="AuditPlan" [(ngModel)]="auditTesting.auditPlanEntity" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">Cost Centre</label>
+                        <input class="form-control" type="text" disabled id="cc" name="cc" [(ngModel)]="auditTesting.costCentreName" />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-control-label">Department</label>
+                        <input class="form-control" type="text" disabled id="department" name="department" [(ngModel)]="auditTesting.departmentName" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">Inferences and Moneytary Impact</label>
+                        <form class="form-inline" *ngFor="let testingObservations of auditTesting.testingPlanObservationData; let i = index;">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="observation">Observation &nbsp;</label>
+                                    <input type="text" disabled class="form-control" id="observation" [(ngModel)]="testingObservations.observation"
+                                        placeholder="Enter Observation" name="observation">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="findings">&nbsp;Findings / Inference &nbsp;</label>
+                                    <input type="text" disabled class="form-control" id="findings" placeholder="Enter Findings/ Inference"
+                                        [(ngModel)]="testingObservations.inference" name="findings">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label> Monetary Impact (INR)</label>
+                                    <input type="text" disabled class="form-control" id="moneytary" placeholder="Enter Moneytary Impact"
+                                        [(ngModel)]="testingObservations.monetaryImpact" name="moneytary">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label> Auditee Response</label>
+                                    <input type="text" class="form-control" id="response" placeholder="Enter Response Here"
+                                        [(ngModel)]="testingObservations.auditeeResponse" name="response" required>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="form-group" *ngIf= "auditTesting.files.length > 0">
+                        <label class="form-control-label">Attachments</label>
+                        <div *ngFor ="let file of auditTesting.files;">
+                                <a (click)="downloadFileService(file , auditTesting.id)">
+                                        <fa-icon [icon]="'file-download'"></fa-icon> {{ file }}</a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">Attach Evidences</label>
+                        <input type="file" [(ngModel)]="auditTesting.path" class="form-control pad0" multiple="multiple"
+                        (change)="change($event)" name="files" accept=".jpg,.png,.JPG,.PNG,jpeg,.JPEG,.pdf,.PDF,.xlsx,.xls,.XLSX,.XLS"
+                        [ngModelOptions]="{standalone: true}"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">Risk Area</label>
+                        <input class="form-control" type="text" disabled id="riskArea" name="riskArea" [(ngModel)]="auditTesting.riskArea" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">Test Results</label>
+                        <input type="text" class="form-control" disabled id="testing" [(ngModel)]="auditTesting.testResult"
+                            placeholder="" name="result">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">Audit Rating</label>
+                        <input disabled type="text" class="form-control" id="rating" name="rating" [(ngModel)]="auditTesting.rating" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">Auditee</label>
+                        <input disabled type="text" class="form-control" id="auditee" name="auditee" [(ngModel)]="auditTesting.auditeeName" />
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-secondary" (click)="previousState()">
+                            <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit" [disabled]="editForm.form.invalid" class="btn btn-primary">
+                            <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                        </button>
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>

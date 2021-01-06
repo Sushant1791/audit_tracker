@@ -1,0 +1,47 @@
+{
+    "audit": {
+        "auditplan": {
+            "title": "Audit Plan",
+            "successMsg": "Audit Plan Created Succesfully !!",
+            "objAdd": "Please add atleast one objective",
+            "bulkUpdate": "Audit Plans Updated Successfully !!",
+            "selectone": "Please select atleast one record for updation",
+            "reminder": "Reminder has been sent successfully"
+        },
+        "procedure": {
+            "title": "Audit Entity",
+            "selectone": "Please select atleast one record for updation",
+            "objAdd": "Please add atleast one Objective",
+            "successMsg": "Audit Procedure created successfully !!",
+            "bulkUpdate": "Audit Procedure Updated Successfully !!",
+            "objectiveSuccess": "Audit Objective Updated Successfully !!",
+            "objectiveError": "Error occured while updating objective !!"
+        },
+        "testing": {
+            "title": "Audit Testing",
+            "successMsg": "Audit Testing Created Succesfully !!",
+            "successUpdateMsg": "Audit Tests Updated Successfully !!",
+            "successFullyLocked": "Audit Test Locked Successfully!!",
+            "successFullyUnLocked": "Audit Test Unlocked Successfully!!",
+            "selectDept": "Please select atleast department",
+            "selectLocation": "Please select atleast one location",
+            "selectMonth": "Please select valid month",
+            "selectYear": "Please select valid year"
+        },
+        "auditee": {
+            "successMsg": "Your response is submitted successfully !!"
+        },
+        "locationMaster": {
+            "createMsg": "Location has been created successfully.",
+            "updateMsg": "Location has been updated successfully."
+        },
+        "deptMaster": {
+            "createMsg": "Department has been created successfully.",
+            "updateMsg": "Department has been updated successfully."
+        },
+        "costCenterMaster": {
+            "createMsg": "Cost Centre has been created successfully.",
+            "updateMsg": "Cost Centre has been updated successfully."
+        }
+    }
+}

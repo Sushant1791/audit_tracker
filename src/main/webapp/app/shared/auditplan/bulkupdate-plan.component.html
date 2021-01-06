@@ -1,0 +1,63 @@
+<div class="modal-header">
+    <h4 class="modal-title" jhiTranslate="bulkupdate.title">Actions</h4> &nbsp;
+    <h4 class="modal-title" jhiTranslate="bulkupdate.auditplan.title1">audit plan</h4>
+    <!-- <button aria-label="Close" data-dismiss="modal" class="close" type="button" (click)="activeModal.dismiss('closed')"><span
+            aria-hidden="true">x</span>
+    </button> -->
+    <button aria-label="Close" data-dismiss="modal" class="close" type="button" (click)="clear()"><span
+            aria-hidden="true">x</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+            <div class="alert alert-danger" [hidden]="true">
+                <strong>{{ auditPlanListForBulkUpdate[0].remarks}}</strong> Please check your credentials and try
+                again.
+            </div>
+        </div>
+        <div class="col-md-8">
+            <form class="form" role="form" (ngSubmit)="bulkUpdate()">
+                <div class="form-group">
+                    <label class="form-control-label" for="actions">Actions</label>
+                    <select class="form-control" id="actions" name="actions" [(ngModel)]="selectedEntity"
+                        (ngModelChange)="onChange($event)">
+                        <option [value]="1">Update Department</option>
+                        <option [value]="2">Update Cost Center</option>
+                        <option [value]="3">Update Start/End Date</option>
+                        <option [value]="4">Update Assign to</option>
+                    </select>
+                </div>
+                <div class="form-group" [hidden] = "!showDepartment">
+                    <label class="form-control-label">Department</label>
+                    <select class="form-control" id="department" name="department" [(ngModel)]="selectedDepartmentId">
+                        <option *ngFor="let entity of departList" [value]="entity.id">{{entity.deptName}}</option>
+                    </select>
+                </div>
+                <div class="form-group" [hidden] = "!showCostCentre">
+                    <label class="form-control-label">Cost Center</label>
+                    <select class="form-control" id="costcentre" name="costcentre" [(ngModel)]="selectedCostCenterId">
+                        <option *ngFor="let entity of costCentreList" [value]="entity.id">{{entity.costCentreName}}</option>
+                    </select>
+                </div>
+                <div class="form-group" [hidden] = "!showAssignTo">
+                    <label>Assign To</label>
+                    <select #auditplan class="form-control" id="assignTo" name="assignTo" [(ngModel)]="selected_assignTo">
+                        <option *ngFor="let user of userList" [value]="user.id">{{ user.firstName
+                            }}&nbsp;{{user.lastName}}</option>
+                    </select>
+                </div>
+                <div class="form-group" [hidden] = "!showSDateAndEDate">
+                    <label class="form-control-label">Start Date</label>
+                    <input type="date" class="form-control" name="start" [(ngModel)]="startDate"/>
+                </div>
+                <div class="form-group" [hidden] = "!showSDateAndEDate">
+                    <label class="form-control-label">End Date</label>
+                    <input type="date" class="form-control" name="end" [(ngModel)]="endDate"/>
+                </div>
+                <button type="submit" class="btn icon-btn btn-outline-primary">Update</button>
+            </form>
+        </div>
+    </div>
+</div>

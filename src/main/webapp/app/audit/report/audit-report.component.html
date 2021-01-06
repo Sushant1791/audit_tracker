@@ -1,0 +1,52 @@
+<div class="row justify-content-center">
+    <div class="col-6">
+        <form name="reportForm" role="form" novalidate (ngSubmit)="generateReport()" #reportForm="ngForm">
+            <h2>
+                <!-- <button class="btn btn-sm float-right btn-outline-warning" (click)="previousState()">
+                    <fa-icon [icon]="'arrow-circle-left'"></fa-icon>
+                    &nbsp;Back
+                </button> -->
+                <a class="btn float-right btn-sm btn-outline-warning margin10" routerLink="/">
+				<fa-icon [icon]="'home'"></fa-icon><span>&nbsp;Home</span></a> 
+
+                Audit Reports</h2>
+            <div>
+                <div class="form-group">
+                    <label class="form-control-label">Month</label>
+                    <select class="form-control" id="month" name="month" [(ngModel)]="orderReport.month" required>
+                        <option *ngFor="let month of months" [ngValue]="month.id">{{month.month}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">Year</label>
+                    <select class="form-control" id="year" name="year" [(ngModel)]="orderReport.year" required>
+                        <option *ngFor="let year of years" [ngValue]="year">
+                            {{year}}
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">Department</label>
+                    <select class="form-control" id="department" name="department" [(ngModel)]="orderReport.department"
+                        required>
+                        <option *ngFor="let entity of departmentList" [value]="entity.id">{{entity.deptName}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <select class="form-control" id="location" name="location" [(ngModel)]="orderReport.location" required>
+                        <option *ngFor="let location of locationList" [value]="location.id">{{location.locationName}}</option>
+                    </select>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-outline-danger" (click)="previousState()">
+                        <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                    </button>
+                    <button type="submit" [disabled]="reportForm.form.invalid" class="btn btn-outline-primary">
+                        <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Generate Report</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

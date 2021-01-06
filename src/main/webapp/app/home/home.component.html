@@ -1,0 +1,180 @@
+<div [ngSwitch]="isAuthenticated()">
+    <div class="row">
+        <h1 class="display-4">Welcome to Internal Audit Tracker !!</h1>
+    </div>
+    <div class="row">
+        <div>
+            <div class="form-inline container" *ngSwitchCase="true">
+            <div *jhiHasAnyAuthority = "'ROLE_ADMIN'">
+                       <a  *ngIf="account" class="btn icon-btn btn-outline-success" routerLink="auditprocedure">
+                    &nbsp;<span class="img-circle">
+                        <fa-icon [icon]="'bars'"></fa-icon>&nbsp;
+                    </span>Audit Plan</a>&nbsp;
+                    </div>
+				<div *jhiHasAnyAuthority = "'ROLE_ADMIN'">
+                <a  *ngIf="account" class="btn icon-btn btn-outline-primary" routerLink="auditplan">
+                    &nbsp;<span class="img-circle">
+                        <fa-icon [icon]="'bars'"></fa-icon>&nbsp;
+                    </span>Audit Assignor</a>&nbsp;
+                    </div>
+                    
+                     <div *jhiHasAnyAuthority = "['ROLE_ADMIN','ROLE_USER']">
+                <a *ngIf="account" class="btn icon-btn btn-outline-warning" routerLink="audittesting">
+                    &nbsp;<span class="img-circle">
+                        <fa-icon [icon]="'bars'"></fa-icon>&nbsp;
+                    </span>Audit Testing </a>&nbsp;
+                    </div>
+                <a  *ngIf="account" class="btn icon-btn btn-outline-info" routerLink="auditee-window">
+                    &nbsp;<span class="img-circle">
+                        <fa-icon [icon]="'bars'"></fa-icon>&nbsp;
+                    </span>Auditee Response</a>&nbsp;
+               <div *jhiHasAnyAuthority = "'ROLE_ADMIN'"><a  *ngIf="account" class="btn icon-btn btn-outline-danger" routerLink="audit-report">
+                    &nbsp;<span class="img-circle">
+                        <fa-icon [icon]="'bars'"></fa-icon>&nbsp;
+                    </span>Audit Report</a>&nbsp;</div>
+            </div>
+            <div class="alert alert-info" *ngSwitchCase="false">
+                <span>
+                    <fa-icon [icon]="'info-circle'"></fa-icon>&nbsp; If you want to start tracking audits, please
+                </span>
+                <a class="alert-link" (click)="login()">sign in</a>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row dashboard-stats" *ngSwitchCase="true">
+        <div class="col-md-3 col-sm-6">
+            <section class="panel panel-box">
+                <div class="panel-left panel-icon bg-success">
+                    <i class="fa fa-dollar text-large stat-icon success-text"></i>
+                    <p class="size-h1 no-margin countdown_first">{{ counts.notresponded }}</p>
+                    <p class=" no-margin text"><span>Not Responded</span></p>
+                </div>
+            </section>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <section class="panel panel-box">
+                <div class="panel-left panel-icon bg-lovender">
+                    <i class="fa fa-shopping-cart text-large stat-icon danger-text"></i>
+                    <p class="size-h1 no-margin countdown_first">{{ counts.responded }}</p>
+                    <p class=" no-margin text"><span>Responded</span></p>
+                </div>
+            </section>
+            
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <section class="panel panel-box">
+                <div class="panel-left panel-icon bg-danger">
+                    <i class="fa fa-rocket text-large stat-icon lovender-text"></i>
+                    <p class="size-h1 no-margin countdown_first">{{ counts.critical }}</p>
+                    <p class="no-margin text"><span>Critical</span></p>
+                </div>
+            </section>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+            <section class="panel panel-box">
+                <div class="panel-left panel-icon bg-info">
+                    <i class="fa fa-users text-large stat-icon info-text"></i>
+                    <p class="size-h1 no-margin countdown_first">{{ counts.noncritical }}</p>
+                    <p class="no-margin text"><span>Non Critical</span></p>
+                </div>
+            </section>
+        </div>    
+    </div> 
+    <br>
+    <div class="row" *ngSwitchCase="true">
+        <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="column" style="width: 100% !important">
+            <div  class="card">
+                <h3>Assigned Audit Plans</h3>
+                <table class="table">
+                    <tr>
+                        <th>Entity</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Assign To</th>
+                    </tr>
+                    <tr *ngFor="let plan of auditplans| slice:0:5; let i = index;">
+                        <td>{{plan.auditPlanEntity}}</td>
+                        <td>{{plan.startDate}}</td>
+                        <td>{{plan.endDate}}</td>
+                        <td>{{plan.assignTo.firstName}}</td>
+                    </tr>
+                    <tr *ngIf=" !auditplans ||  auditplans.length<=0" >
+                		<td  colspan="4" style="text-align: center;color: red;"> No data found</td>
+                	</tr>
+                </table>
+                <a routerLink="auditplan" *ngIf="auditplans && auditplans.length > 0" >Show all</a>
+            </div>
+        </div>
+        <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="column" style="width: 100% !important">
+            <div class="card">
+                <h3>Available Audit Plans</h3>
+                <table class="table">
+                    <tr>
+                        <th>Entity</th>
+                        <th>Description</th>
+                        <th>Department</th>
+                        <th>Cost Center</th>
+                    </tr>
+                    <tr *ngFor="let plan of auditProcedureList | slice:0:5; let i = index;">
+                        <td>{{plan.procedureTitle}}</td>
+                        <td>{{plan.procedureDescription}}</td>
+                        <td>{{plan.departmentName}}</td>
+                        <td>{{plan.costCentreName}}</td>
+                    </tr>
+                    <tr *ngIf=" !auditProcedureList ||  auditProcedureList.length<=0" >
+                		<td  colspan="4" style="text-align: center;color: red;"> No data found</td>
+                	</tr>
+                </table>
+                <a routerLink="auditprocedure" *ngIf="auditProcedureList && auditProcedureList.length > 0" >Show all</a>
+            </div>
+        </div>
+        <div *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_USER']" class="column" style="width: 100% !important">
+            <div class="card">
+                <h3>Pending queries</h3>
+                <table class="table">
+                    <tr>
+                        <th>Entity</th>
+                        <th>Cost</th>
+                        <th>Department</th>
+                        <th>Due</th>
+                    </tr>
+                    <tr *ngFor="let obj of queriesRaisedByAuditor | slice:0:5; let i = index;">
+                        <td>{{obj.auditPlanEntity}}</td>
+                        <td>{{obj.costCentreName}}</td>
+                        <td>{{obj.departmentName}}</td>
+                        <td>{{obj.overDueDays}}</td>
+                    </tr>
+                    <tr *ngIf=" !queriesRaisedByAuditor ||  queriesRaisedByAuditor.length<=0" >
+                		<td  colspan="4" style="text-align: center;color: red;"> No data found</td>
+                	</tr>
+                </table>
+                <a routerLink="audittesting" *ngIf="queriesRaisedByAuditor && queriesRaisedByAuditor.length >0" >Show all</a>
+            </div>
+        </div>
+        <div *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_USER']" class="column" style="width: 100% !important">
+            <div class="card">
+                <h3>Queries you raised</h3>
+                <table class="table">
+                    <tr>
+                        <th>Entity</th>
+                        <th>Cost</th>
+                        <th>Department</th>
+                        <th>Due</th>
+                    </tr>
+                    <tr *ngFor="let obj of queriesForAuditee | slice:0:5; let i = index;">
+                        <td>{{obj.auditPlanEntity}}</td>
+                        <td>{{obj.costCentreName}}</td>
+                        <td>{{obj.departmentName}}</td>
+                        <td>{{ obj.overDueDays}}</td>
+                    </tr>
+                    <tr *ngIf=" !queriesForAuditee ||  queriesForAuditee.length<=0" >
+                		<td  colspan="5" style="text-align: center;color: red;"> No data found</td>
+                	</tr>
+                </table>
+                <a routerLink="auditee-window" *ngIf="queriesForAuditee && queriesForAuditee.length > 0" >Show all</a>
+            </div>
+        </div>
+    </div>
+</div>

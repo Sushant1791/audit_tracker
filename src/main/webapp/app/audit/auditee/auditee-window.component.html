@@ -1,0 +1,97 @@
+<div>
+    <h2>
+        <span id="user-management-page-heading">Queries</span>
+        <!-- <button class="btn btn-sm float-right btn-outline-warning" (click)="previousState()">
+					<fa-icon [icon]="'arrow-circle-left'"></fa-icon>
+					&nbsp;Back
+				</button> -->
+				<a class="btn float-right btn-sm btn-outline-warning margin10" routerLink="/">
+            <fa-icon [icon]="'home'"></fa-icon><span>&nbsp;Home</span></a> 
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="table-responsive" *ngIf="auditTestingList">
+		<form role="form">
+			<table class="table">
+				<thead>
+					<tr>
+						<th width="38%">Audit Plan <input type="text"
+							class="form-control" name="auditPlan"
+							[(ngModel)]="searchTestingPlan.auditPlanEntity" maxlength="12"
+							placeholder="Search by Audit Plan.."></th>
+						<th width="18%">Start Due Date <input type="date"
+							class="form-control" name="start_date"
+							[(ngModel)]="searchTestingPlan.start_date"></th>
+						<th width="18%">End Due Date <input type="date"
+							class="form-control" name="end_date"
+							[(ngModel)]="searchTestingPlan.end_date" maxlength="50"></th>
+
+						<th width="15%"><span><button type="submit"
+									class="btn btn-warning srch_btn"
+									(click)="getAllTestingPlans(0,searchTestingPlan)">Search</button></span></th>
+						<!-- <th width="12%"><span><button type="button" class="btn btn-success" (click) = "downLoadCSV()"><fa-icon [icon]="'download'"></fa-icon></button></span> -->
+						</th>
+						<th width="15%"></th>
+					</tr>
+				</thead>
+			</table>
+		</form>
+		<table class="table table-striped">
+            <thead>
+                <!-- <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse"> -->
+                <tr>
+                    <th>Audit Plan</th>
+                    <th>Objectives</th>
+                    <th>Due Date</th>
+                    <th>Overdue Days</th>
+                    <th>Status</th>
+                    <th>Respond</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let plan of auditTestingList; let i = index">
+                <tr>
+                    <td>{{plan.auditPlanEntity}}</td>
+                    <td><a (click)="showObjective(i);">Objectives</a></td>
+                    <td>{{plan.expectedRevertDate}}</td>
+                    <td>{{plan.overDueDays}}</td>
+                    <td>
+                        <div class="container">
+                            <a *ngIf="plan.responded" class="btn icon-btn btn-outline-primary rounded" routerLink="auditplan">
+                                &nbsp;<span class="img-circle">Responded</span></a>
+                            <a *ngIf="!plan.responded" class="btn icon-btn btn-outline-warning rounded" routerLink="auditplan">
+                                &nbsp;<span class="img-circle">Pending</span></a>
+                        </div>
+
+                    </td>
+                    <td><a (click)="responseToAudit(plan.id)">Respond</a></td>
+                </tr>
+                <tr>
+                    <td class = "pad0" colspan="6">
+                    <table class="table table-striped">
+                        <tbody [hidden]="!plan.showObjectives">
+                            <tr>
+                                <th colspan="2">Objective Name
+                                </th>
+                                <th colspan="2">Objective Description
+                                </th>
+                                <th colspan="2">Active
+                                </th>
+                            </tr>
+                            <tr *ngFor="let objective of plan.testingAuditPlanObjectives; let j = index">
+                                <td colspan="2" >{{objective.objectiveName}}</td>
+                                <td colspan="2">{{objective.objectiveDescription}}</td>
+                                <td colspan="2">{{objective.active}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody *ngIf=" !auditTestingList ||  auditTestingList.length<=0" > 
+            	<tr>
+                	<td  colspan="6" style="text-align: center;color: red;"> No data found</td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="button" *ngIf="totalCount!= 0 && page< totalCount-1" class="btn btn-primary" (click)="loadMore()">More</button>
+    </div>
+</div>

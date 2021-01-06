@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Audit Tracker Team Notification</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="shortcut icon" th:href="@{|${baseUrl}/favicon.ico|}" />
+</head>
+<body>
+	<p>Dear <span th:text="${auditeeName}"></span>,</p>
+	<p>There are audit observations relating to your department, kindly
+		request you to check the same and revert within <span th:text="${revertDate}"></span>.</p>
+	<p>You may also attach the documents wherever necessary.</p>
+	<p>
+		Kindly click the <a th:href="${link}" target="_blank">link</a>&nbsp;for the
+		Observations.
+	</p>
+	<p>Regards,</p>
+	<p th:text="${auditorName}"></p>
+</body>
+</html>

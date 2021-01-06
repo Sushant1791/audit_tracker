@@ -1,0 +1,81 @@
+<div>
+
+    <jhi-alert></jhi-alert>
+    <div class="table-responsive" *ngIf="auditProcedure">
+        <div>
+            <h2><button class="float-right btn btn-md btn-warning" (click)="previousState()">
+                    <fa-icon [icon]="'arrow-circle-left'"></fa-icon>
+                    &nbsp;Back
+                </button> Plan Name:{{auditProcedure.procedureTitle}}</h2>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+                <!-- <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse"> -->
+                <tr>
+                    <!-- <th>Select</th> -->
+                    <th>Objective Name</th>
+                    <th>Objective Description</th>
+                    <!-- <th>Status</th> -->
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="auditProcedure">
+                <tr *ngFor="let objective of auditProcedure.auditProcedureObjectiveData">
+                    <!-- <td><input type="checkbox"/> </td> -->
+                    <td *ngIf="!objective.isEdit">{{objective.objectiveName}}
+                        
+                    </td>
+                    <td *ngIf="objective.isEdit">
+                        <input  type="text" id="objectiveName" name="objectiveName" [(ngModel)]="objective.objectiveName" />
+                    </td>
+                    <td *ngIf="!objective.isEdit">{{objective.objectiveDescription}}</td>
+                    <td *ngIf="objective.isEdit">
+                            <input  type="text" id="objectiveDescription" name="objectiveDescription" [(ngModel)]="objective.objectiveDescription" />
+                        </td>
+
+                    <!-- <td>
+                    <button class="btn btn-danger btn-sm" (click)="setActive(objective, true)" *ngIf="!objective.active"
+                            jhiTranslate="userManagement.deactivated">Deactivated</button>
+                    <button class="btn btn-success btn-sm" (click)="setActive(objective, false)" *ngIf="objective.active"  
+                    jhiTranslate="userManagement.activated">Activated</button>
+                </td> -->
+                    <!-- <td>
+                    <label class="alert-danger"   *ngIf="!objective.active" >Deactivated</label>
+                    <label class="alert-success"   *ngIf="objective.active" >Activated</label>
+                </td> -->
+                    <!-- <td class="text-left">
+                    <div class="btn-group flex-btn-group-container">
+                       
+                        <button type="submit"
+                               
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="button" (click)="deleteObjective(objective.id)"
+                                class="btn btn-danger btn-sm" >
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td> -->
+                    <td>
+                        <button *ngIf="!objective.isEdit" class="btn btn-primary btn-sm" (click)="editForm(objective)">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon><span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button *ngIf="objective.isEdit" class="btn btn-success btn-sm" (click)="saveObjective(objective)">  
+                                <fa-icon [icon]="'save'"></fa-icon>
+                                <span class="d-none d-md-inline" 
+                                    >Submit</span>
+                            </button>
+                            <button  *ngIf="objective.isEdit" class="btn btn-danger btn-sm" (click)="cancelForm(objective)">
+                                    <fa-icon [icon]="'times'"></fa-icon><span class="d-none d-md-inline">Cancel</span>
+                                </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 [hidden]="!dept.id" id="myUserLabel">
+                Update Department
+            </h2>
+            <h2 [hidden]="dept.id" id="myUserLabel">
+                Create Department
+            </h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group">
+                    <label class="form-control-label">Department Name</label>
+                    <input type="text" class="form-control" name="locationName" #locationNameInput="ngModel" [(ngModel)]="dept.deptName" maxlength="50" required>
+                    <div *ngIf="locationNameInput.dirty && locationNameInput.invalid">
+                        <small class="form-text text-danger" *ngIf="locationNameInput.errors.maxlength" >
+                            Department Name cannot be longer than 50 characters.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="locationNameInput.errors.required">
+                            Department Name is required.
+                        </small>
+                    </div>
+                </div>
+               
+                 
+                <div class="form-check">
+                    <label class="form-check-label" for="activated">
+                        <input class="form-check-input"  type="checkbox" id="activated" name="activated" [(ngModel)]="dept.isActive">
+                        <span>Activated</span>
+                    </label>
+                </div>
+            </div><br>
+            <div>
+                <button type="button" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span
+                    jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

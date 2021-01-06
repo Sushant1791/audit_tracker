@@ -1,0 +1,55 @@
+<div  >
+    <h2>
+        <span>Generated Audit Report :: {{ locationNew[0].locationName }}</span>
+        <div *ngIf="data && data.length >0"  class="float-right">
+            <button class="btn btn-outline-success" (click)="generatePDF()">
+                <fa-icon [icon]="'download'"></fa-icon>
+                Download Report</button></div>
+                <a class="btn float-right btn-sm btn-outline-warning margin10" routerLink="/">
+            <fa-icon [icon]="'home'"></fa-icon><span>&nbsp;Home</span></a>
+    </h2>
+    <div id="report" class="table-responsive" *ngIf="data">
+        <table class="table table-striped">
+            <thead>
+                <!-- <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse"> -->
+                <tr>
+                    <th>Sr. No.</th>
+                    <th>Department</th>
+                    <th>Cost Center</th>
+                    <th>Audit Plan</th>
+                    <th>Observation</th>
+                    <th>Inference</th>
+                    <th>Monetary Impact</th>
+                    <th>Owner</th>
+                    <th>Reponse from Auditee</th>
+                    <th>Risk Area</th>
+                    <th>Test Result</th>
+                    <th>Action Taken</th>
+                    <th>Audit Rating</th>
+                    <th>Revert Overdue</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of data; let i = index">
+                    <td>{{i + 1}}</td>
+                    <td>{{data.departmentName}}</td>
+                    <td>{{data.costCentreName}}</td>
+                    <td>{{data.auditPlanEntity}}</td>
+                    <td>{{data.observation}}</td>
+                    <td>{{data.inference}}</td>
+                    <td>{{data.monetaryImpact}}</td>
+                    <td>{{data.auditorName}}</td>
+                    <td>{{data.auditeeResponse}}</td>
+                    <td>{{data.riskArea}}</td>
+                    <td>{{data.testResult}}</td>
+                    <td>In Progress</td>
+                    <td>{{data.rating}}</td>
+                    <td>Yes</td>
+                </tr>
+                <tr *ngIf=" !data ||  data.length<=0" >
+                	<td  colspan="14" style="text-align: center;color: red;"> No data found</td>
+                </tr>
+            </tbody>
+
+    </div>
+</div>

@@ -1,0 +1,62 @@
+<div>
+    <h2>
+        <span>Departments</span>
+        <button class="btn btn-sm btn-outline-primary float-right jh-create-entity margin10" [routerLink]="['./new/0']">
+            <fa-icon [icon]="'plus'"></fa-icon> <span>Create Department</span>
+        </button>
+		<a class="btn float-right btn-sm btn-outline-warning margin10" routerLink="/">
+            <fa-icon [icon]="'home'"></fa-icon><span>&nbsp;Home</span></a> 
+	</h2>
+    <jhi-alert></jhi-alert>
+    <jhi-alert-error></jhi-alert-error>
+    <div class="table-responsive">
+        	<form  role="form" >
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th width="66%">Name: <input type="text" class="form-control" name="name" [(ngModel)]="searchDept.deptName" 
+                                	maxlength="50" placeholder="Search by Name.."></th>
+                                <th width="33%">
+                                	<span><button type="submit" class="btn btn-warning srch_btn" (click)="getAllDepts(0,searchDept)">Search</button></span>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+            </form>
+        <table class="table table-striped">
+            <thead>
+	            <tr>
+	            	<th>No</th>
+	                <th>Name</th>
+	                <th>Active</th>
+	                <th></th>
+	            </tr>
+            </thead>
+            <tbody>
+            	<tr *ngFor="let dept of depts; let i = index">
+					<td>{{i+1}}</td>
+	                <td>{{dept.deptName}}</td>
+	                <td>
+	                	<button class="btn btn-danger btn-sm" *ngIf="!dept.isActive" >Deactivated</button>
+                    	<button class="btn btn-success btn-sm"  *ngIf="dept.isActive">Activated</button>
+	                </td>
+	                <td>
+	               		<div class="text-center btn-group flex-btn-group-container">
+							<button type="submit" (click)="editDept(dept.id)"
+								queryParamsHandling="merge"
+								class="btn  btn-outline-primary btn-sm">
+								<fa-icon [icon]="'pencil-alt'"></fa-icon>
+								<span class="d-none d-md-inline">View</span>
+							</button>
+						</div>
+	                
+	                </td>
+                </tr>
+                <tr *ngIf=" !depts ||  depts.length<=0" >
+                	<td  colspan="5" style="text-align: center;color: red;"> No data found</td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="button" *ngIf="totalCount!= 0 && page< totalCount-1" class="btn btn-primary" (click)="loadMore()">More</button>
+    </div>
+</div>

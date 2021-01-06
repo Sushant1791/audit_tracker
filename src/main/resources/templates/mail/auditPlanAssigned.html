@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Audit Tracker Team Notification</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="shortcut icon" th:href="@{|${baseUrl}/favicon.ico|}" />
+</head>
+<body>
+	<p>
+		Dear <span th:text="${assignTo}"></span>,</br>
+	</p>
+	<p>
+		You have been assigned to audit <span th:text="${auditPlanEntity}"></span>,
+		kindly prepare an Audit test and provide necessary observation and
+		suggest whether adequate controls are in place. Mark if you see that
+		the said observations are critical. Send observations to auditee,
+		wherever required, and take responses. Close the Audit test if the
+		responses are to your satisfaction.
+	</p>
+	<p>
+		<span>Regards, </span> <br/> <em>Administrator</em>
+	</p>
+</body>
+</html>
